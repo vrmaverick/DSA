@@ -28,4 +28,5 @@ if __name__ =='__main__':
 # it is good to use recursion if you dont have anything fixed depth ki kab tak jaayega
 # Use recusrsion for earching and traversing also sometimes in sorting over iteration
 ### Everytime using a tree or considering a tree use recursion
+
 ### brea larger problem into smaller problems each subproblem is identical and the solutions are later combined 
