@@ -1,0 +1,89 @@
+from typing import List
+
+def find_string_anagrams(text: str, pattern: str) -> List[int]:
+    """
+    Finds the starting indices of all substrings in 'text' that are anagrams of 'pattern'.
+    
+    This function uses the Sliding Window pattern combined with a frequency map
+    to achieve an optimal time complexity of O(N + M), where N is the length of 
+    the text and M is the length of the pattern.
+
+    Args:
+        text: The main string to search within.
+        pattern: The pattern string to find anagrams of.
+
+    Returns:
+        A list of starting indices where anagrams are found.
+    """
+    
+    L = 0  # Left pointer of the sliding window
+    matched = 0  # Tracks how many distinct characters in the pattern have been fully matched
+    result_indices = []
+    
+    # 1. Create a frequency map for the pattern
+    # The map stores the REQUIRED count for each character.
+    pattern_freq = {}
+    for char in pattern:
+        pattern_freq[char] = pattern_freq.get(char, 0) + 1
+        
+    # The total number of distinct characters we need to match is the number of keys.
+    distinct_chars_to_match = len(pattern_freq)
+    
+    # Iterate through the string with the right pointer R
+    for R in range(len(text)):
+        right_char = text[R]
+        
+        # 2. EXPAND the window (move R to the right)
+        # If the character is part of the pattern, decrement its required count.
+        if right_char in pattern_freq:
+            pattern_freq[right_char] -= 1
+            
+            # If the count for this character drops to 0, it means we have matched 
+            # all required instances of this specific character.
+            if pattern_freq[right_char] == 0:
+                matched += 1
+                
+        # 3. CHECK for an Anagram
+        # An anagram is found if the current window size equals the pattern length 
+        # AND all distinct characters in the pattern have been matched.
+        if matched == distinct_chars_to_match:
+            # We found an anagram! Record the starting index.
+            result_indices.append(L)
+            
+        # 4. CONTRACT the window (move L to the right)
+        # We must slide the window forward if its size reaches the pattern length.
+        if R >= len(pattern) - 1:
+            left_char = text[L]
+            
+            # If the character leaving the window was part of the pattern,
+            # we need to reverse the matching process.
+            if left_char in pattern_freq:
+                # If its count was 0 before we incremented it (meaning it was matched),
+                # we now lose a match, so decrement the matched count.
+                if pattern_freq[left_char] == 0:
+                    matched -= 1
+                    
+                # The character is leaving the window, so increment its required count 
+                # (it needs to be matched again by a future window).
+                pattern_freq[left_char] += 1
+                
+            # Slide the left pointer.
+            L += 1
+            
+    return result_indices
+
+# --- Example Usage ---
+
+# Example 1:
+str1 = "ppqp"
+pattern1 = "pq"
+print(f"Text: '{str1}', Pattern: '{pattern1}'")
+print(f"Starting indices of anagrams: {find_string_anagrams(str1, pattern1)}") 
+# Expected Output: [1, 2] ("pq" at index 1 and "qp" at index 2 are anagrams of "pq")
+
+# Example 2:
+str2 = "abbcabc"
+pattern2 = "abc"
+print(f"\nText: '{str2}', Pattern: '{pattern2}'")
+print(f"Starting indices of anagrams: {find_string_anagrams(str2, pattern2)}") 
+# Expected Output: [2, 3, 4] ("bca" at index 2, "cab" at index 3, "abc" at index 4)
