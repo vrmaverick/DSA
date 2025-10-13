@@ -83,7 +83,89 @@ def bfs_list(graph, start_node):
 
 #   return null;
 # }
+from collections import deque
 
+class Node:
+    """A simple class to represent a binary tree node."""
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def findSuccessor(root: Node, key: int) -> Node:
+    """
+    Finds the level order successor of the node with the given key.
+
+    Args:
+        root: The root node of the binary tree.
+        key: The value of the node whose successor is to be found.
+
+    Returns:
+        The level order successor Node, or None if the key is not found 
+        or is the last node in the level order traversal.
+    """
+    if root is None:
+        return None
+
+    # Initialize the queue with the root. deque is efficient for queue operations.
+    queue = deque([root])
+
+    # Flag to track if the key has been found in the previous iteration
+    key_found = False
+
+    while queue:
+        # Get the next node from the front of the queue
+        currNode = queue.popleft()
+
+        # If the key was found in the previous iteration, the current node 
+        # is the successor.
+        if key_found:
+            return currNode
+
+        # Insert the children of the current node into the queue
+        if currNode.left:
+            queue.append(currNode.left)
+        if currNode.right:
+            queue.append(currNode.right)
+
+        # Check if the current node is the key node
+        if currNode.value == key:
+            # Set the flag to True. The node popped in the NEXT iteration 
+            # will be the successor.
+            key_found = True
+    
+    # If the loop finishes (meaning the key was either not found or 
+    # was the very last node processed), return None.
+    return None
+
+# -----------------
+# Example Usage:
+# -----------------
+# Tree Structure:
+#       1
+#      / \
+#     2   3
+#    / \
+#   4   5
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+
+# Level Order Traversal: 1, 2, 3, 4, 5
+
+# 1. Successor of 2 should be 3
+successor_2 = findSuccessor(root, 2)
+print(f"Successor of 2: {successor_2.value if successor_2 else None}") # Output: 3
+
+# 2. Successor of 3 should be 4
+successor_3 = findSuccessor(root, 3)
+print(f"Successor of 3: {successor_3.value if successor_3 else None}") # Output: 4
+
+# 3. Successor of 5 (last node) should be None
+successor_5 = findSuccessor(root, 5)
+print(f"Successor of 5: {successor_5.value if successor_5 else None}") # Output: None
   
 # Left View
   
