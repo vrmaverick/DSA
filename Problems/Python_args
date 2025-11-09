@@ -1,0 +1,9 @@
+# Define add and mul
+add = lambda x, y: x + y
+mul = lambda x, y: x * y
+
+def call_func(func, *args):
+    return func(*args)
+
+result1 = call_func(add, 50, 50)   # Returns 100
+result2 = call_func(mul, 45, 43)   # Returns 1935
