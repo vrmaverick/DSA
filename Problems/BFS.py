@@ -201,3 +201,42 @@ print(f"Successor of 5: {successor_5.value if successor_5 else None}") # Output:
 
 #   return result;
 # };
+
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        
+        # We'll use a list/array to simulate passing variables by reference 
+        # in Python (or you could use class attributes like you tried).
+        self.k = k
+        self.count = 0
+        self.result = None
+        
+        def inorder_traversal(node):
+            # If we've already found the result, stop recursing
+            if not node or self.result is not None:
+                return
+
+            # 1. Traverse Left (Left subtree contains smaller elements)
+            inorder_traversal(node.left)
+            
+            # If result is already found during the left traversal, immediately return
+            if self.result is not None:
+                return
+            
+            # 2. Visit Root (Count the current node)
+            self.count += 1
+            
+            if self.count == self.k:
+                # This is the k-th smallest element! Store the value and stop.
+                self.result = node.val
+                return
+            
+            # 3. Traverse Right (Right subtree contains larger elements)
+            inorder_traversal(node.right)
+
+        inorder_traversal(root)
+        return self.result
+
+
+# Kthe smallest elemnt from binary tree wala result
