@@ -1,0 +1,34 @@
+from typing import List
+
+def generate_permutations(elements: List[int]) -> List[List[int]]:
+    # 1. Base Case: An empty list has only one permutation: an empty list.
+    if len(elements) == 0:
+        return [[]]
+
+    all_permutations = []
+    
+    # 2. Recursive Step: Iterate through each element to use it as the "pivot"
+    for i in range(len(elements)):
+        # Select the current element as the pivot
+        pivot = elements[i]
+        
+        # Create a list of the remaining elements
+        remaining_elements = elements[:i] + elements[i+1:]
+        
+        # Recursively find all permutations of the remaining elements
+        perms_of_rest = generate_permutations(remaining_elements)
+        
+        # Combine the pivot with every permutation of the remaining list
+        for perm in perms_of_rest:
+            # Prepend the pivot to the current permutation and add to the result list
+            all_permutations.append([pivot] + perm)
+            
+    return all_permutations
+
+# Example Usage
+my_list = [1, 2, 3]
+result = generate_permutations(my_list)
+
+print(f"Input List: {my_list}")
+print(f"Number of Permutations: {len(result)}")
+print(f"All Permutations: {result}")
