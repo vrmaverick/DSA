@@ -87,3 +87,22 @@ pattern2 = "abc"
 print(f"\nText: '{str2}', Pattern: '{pattern2}'")
 print(f"Starting indices of anagrams: {find_string_anagrams(str2, pattern2)}") 
 # Expected Output: [2, 3, 4] ("bca" at index 2, "cab" at index 3, "abc" at index 4)
+
+
+############################33To find angrams we can use this code to dont use normal inefficient method
+
+count_s = collections.Counter(s)
+count_t = collections.Counter(t)
+count_s == count_t ----- > True Valid angram.
+
+
+
+collections.Counter: This class from Python's standard collections module is specifically designed to count the hashable objects in an iterable (like a string).
+
+Result: When applied to a string, it returns a dictionary-like object where:
+
+Keys are the unique characters in the string.
+
+Values are the counts (frequencies) of those characters.
+
+Example: If s = "anagram", then count_s will be {'a': 3, 'n': 1, 'g': 1, 'r': 1, 'm': 1}.
