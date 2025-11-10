@@ -1,0 +1,20 @@
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # ✅ Correct debugging check
+        if not list1:
+            return list2
+        elif not list2:
+            return list1
+
+        if list1.val <= list2.val : 
+            list1.next = self.mergeTwoLists(list1.next,list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1,list2.next)
+            return list2
+
+# self.recusrive function to call the same function ... sometimes to chec value we need to make first check if list exists then print to debug
+
+        if not head or not head.next:
+            return head
+harr baar daalo error aa sakata hai nahi toh LL ke problem ma head.next/ head.val karne e idk kyu
