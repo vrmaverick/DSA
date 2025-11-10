@@ -51,3 +51,6 @@ class Solution:
 # # Expected Output: [[1, 5]]
 # print(sol.merge([[1,4],[0,2],[3,5]]))
 # # Expected Output: [[0, 5]]
+
+
+# Always Remember to sort the intervals by end time using a lambda function, the end times, not start time
