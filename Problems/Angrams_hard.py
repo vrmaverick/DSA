@@ -106,3 +106,11 @@ Keys are the unique characters in the string.
 Values are the counts (frequencies) of those characters.
 
 Example: If s = "anagram", then count_s will be {'a': 3, 'n': 1, 'g': 1, 'r': 1, 'm': 1}.
+
+
+freq_map = collections.Counter(nums)
+        
+        # 2. Use the .most_common(k) method.
+        # This returns a list of (element, frequency) tuples, sorted by frequency.
+        # Example: [(1, 3), (2, 2)]
+        top_k_pairs = freq_map.most_common(k)
